@@ -16,7 +16,12 @@ export default async function handler(req, res) {
 
   //Fetch all products
   if(method === 'GET'){
-    const products = await Product.find()
-    res.json(products)
+    if(req.query?.id){
+      const product = await Product.findOne({_id:req.query.id})
+      res.json(product)
+    }else{
+      const products = await Product.find()
+      res.json(products)
+    }
   }
 }
