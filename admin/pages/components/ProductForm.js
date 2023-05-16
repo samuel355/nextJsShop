@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import { useState } from "react"
 
 export default function ProductForm({productInfo}){
-    const {title: existingTitle, description:existingDescription, price:existingPrice, _id} = productInfo
+    const {title:existingTitle, description:existingDescription, price:existingPrice, _id} = productInfo
     
     const [title, setTitle] = useState(existingTitle ||  '')
     const [description, setDescription] = useState( existingDescription || '')
