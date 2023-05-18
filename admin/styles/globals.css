@@ -62,3 +62,4 @@ table.basic a{
 .btn-default, .btn-red{
   @apply px-4 rounded-md py-1 mt-1
 }
+img{width: 100%;}
