@@ -12,9 +12,16 @@ export default async function handler(req, res){
         res.json(categoryDoc);
     }
 
+    //Update Category
+    if(method === 'PUT'){
+        const {name, parentCategory, _id} = req.body;
+        const categoryDoc  = await Category.updateOne({_id},{name, parent:parentCategory})
+        res.json(categoryDoc);
+    }
+
     //Fetch all categories
     if(method === 'GET'){
-        const categoriesDoc = await Category.find()
+        const categoriesDoc = await Category.find().populate('parent')
         res.json(categoriesDoc)
     }
 }

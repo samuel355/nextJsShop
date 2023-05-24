@@ -6,6 +6,8 @@ export default function Categories(){
     const [name, setName] = useState('')
     const [categories, setCategories] = useState([])
     const [parentCategory, setParentCategory] = useState('')
+    const [pageTopic, setPageTopic] = useState('New Category')
+    const [catId, setCatId] = useState()
 
     useEffect(() => {
         fetchCategories()
@@ -19,17 +21,32 @@ export default function Categories(){
 
     async function saveCategory(ev){
         ev.preventDefault()
-        await axios.post('/api/categories', {name, parentCategory})
+        const data ={name, parentCategory}
+        //if page topic = New Category create new category else update the category
+        if(pageTopic === 'New Category'){
+            await axios.post('/api/categories', data)
+        }else{
+            await axios.put('/api/categories', {...data, _id: catId})
+        }
         setName('')
         setParentCategory('')
+        setPageTopic('New Category')
         fetchCategories()
     }
      
+    function editCategory(category){  
+        setCatId(category._id)
+        setPageTopic(category.name)
+        setName(category.name)
+        setParentCategory(category.parent?._id)
+    }
+
+
     return(
         <Layout>
-            <h1 className="text-3xl mb-3">Categories</h1>
+            <h1 className="text-3xl mb-3 text-center">Categories</h1>
             <form className="mb-5" onSubmit={saveCategory}>
-                <label htmlFor="category-name">New Category Name</label>
+                <h1 htmlFor="category-name mb-3 text-2xl">{pageTopic}</h1>
                 <div className="flex gap-2 items-center">
                     <input value={name} onChange={ev => setName(ev.target.value)} type="text" placeholder="Category Name" />
                     <select className="mb-0 p-2 -mt-3" value={parentCategory} onChange = {ev => setParentCategory(ev.target.value)}>
@@ -47,17 +64,20 @@ export default function Categories(){
                 <thead>
                     <tr>
                         <td>Category Name</td>
-                        <td>Actions</td>
+                        <td>Parent Category</td>
+                        <td>Action</td>
                     </tr>
                 </thead>
 
                 <tbody>
                     {
                         categories && categories.map(category =>(
-                            <tr>
+                            <tr key={category._id}>
                                 <td key={category._id}>{category.name}</td>
+                                <td>{category?.parent?.name}</td>
                                 <td>
-                                    
+                                    <button onClick={() => editCategory(category)} className="btn-primary mx-2">Edit</button>
+                                    <button className="btn-primary">Delete</button>
                                 </td>
                             </tr>
                         ))
