@@ -22,6 +22,12 @@ export default async function handler(req, res){
     //Fetch all categories
     if(method === 'GET'){
         const categoriesDoc = await Category.find().populate('parent')
-        res.json(categoriesDoc)
+        res.json(categoriesDoc) 
+    }
+    //Delete Category
+    if(method === 'DELETE'){
+        const {_id} = req.query
+        await Category.deleteOne({_id})
+        res.json('ok')
     }
 }

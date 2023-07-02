@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import axios from "axios";
+import { withSwal } from "react-sweetalert2";
 
-export default function Categories(){
+function Categories({swal}){
     const [name, setName] = useState('')
     const [categories, setCategories] = useState([])
     const [parentCategory, setParentCategory] = useState('')
@@ -41,6 +42,33 @@ export default function Categories(){
         setParentCategory(category.parent?._id)
     }
 
+    function deleteCategory(category){
+        swal.fire({
+            title: 'Are you Sure ? ',
+            text: `Do you want to Delete - ${category.name} ?`,
+            showCancelButton: true,
+            cancelButtonText: 'Cancel',
+            confirmButtonText: 'Delete',
+            reverseButtons: true,
+            icon: 'warning',
+            confirmButtonColor: '#d55',
+            
+            didOpen: ()=>{
+
+            },
+            didClose: () => {
+
+            }
+        }).then( async result => {
+            if(result.isConfirmed){
+                const {_id} = category
+                await axios.delete('/api/categories?_id='+_id)
+                fetchCategories()
+            }
+        }).catch(error => {
+            console.log(error)
+        })
+    }
 
     return(
         <Layout>
@@ -57,7 +85,7 @@ export default function Categories(){
                            ))
                         }
                     </select>
-                    <button type="submit" className="bg-blue-900 py-2 -mt-3 text-white px-3 rounded-md">Save</button>
+                    <button type="submit" className="bg-blue-900 py-2 -mt-3 text-white px-3 rounded-md">{pageTopic === 'New Category' ? 'Save' : 'Update'}</button>
                 </div>
             </form>
             <table className='mb-3 basic'>
@@ -77,7 +105,11 @@ export default function Categories(){
                                 <td>{category?.parent?.name}</td>
                                 <td>
                                     <button onClick={() => editCategory(category)} className="btn-primary mx-2">Edit</button>
-                                    <button className="btn-primary">Delete</button>
+                                    <button 
+                                        className="btn-primary"
+                                        onClick={() => deleteCategory(category)}
+                                    >
+                                        Delete</button>
                                 </td>
                             </tr>
                         ))
@@ -88,3 +120,7 @@ export default function Categories(){
         </Layout>
     )
 }
+
+export default withSwal(({swal}, ref) => (
+    <Categories swal={swal} ref={ref} />
+))
