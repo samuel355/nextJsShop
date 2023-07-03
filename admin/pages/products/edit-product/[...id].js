@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export default function EditProduct(){
-    const [productInfo, setProductInfo] = useState()
+    const [productInfo, setProductInfo] = useState(null)
 
     const router = useRouter()
     const {id} = router?.query
@@ -25,7 +25,7 @@ export default function EditProduct(){
         <Layout>
             {
                 productInfo && (
-                    <ProductForm productInfo={...productInfo} />
+                    <ProductForm productInfo={productInfo} />
                 )
             }
            

@@ -7,7 +7,7 @@ import { ReactSortable } from "react-sortablejs";
 export default function ProductForm({productInfo}){
 
     const {
-        title: existingTitle, 
+        title:existingTitle, 
         description:existingDescription, 
         price:existingPrice,
         _id,
@@ -21,9 +21,6 @@ export default function ProductForm({productInfo}){
     const [images, setImages] = useState(existingImages || [])
     const [uploading, setUploading] = useState(false)
     const router = useRouter()
-
-    // console.log("=>>")
-    // console.log(title)
 
     const [pageHeader, setPageHeader] = useState('')
     const [pageBtn, setPageBtn] = useState('')
