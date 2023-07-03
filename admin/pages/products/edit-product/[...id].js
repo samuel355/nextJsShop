@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export default function EditProduct(){
-    const [productInfo, setProductInfo] = useState(null)
+    const [productInfo, setProductInfo] = useState()
 
     const router = useRouter()
     const {id} = router?.query

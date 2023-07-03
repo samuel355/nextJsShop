@@ -14,13 +14,16 @@ export default function ProductForm({productInfo}){
         images:existingImages
     } = productInfo;
 
-    const [title, setTitle] = useState(existingTitle ||  '')
+    const [title, setTitle] = useState(existingTitle || '')
     const [description, setDescription] = useState( existingDescription || '')
     const [price, setPrice] = useState( existingPrice ||  '')
     const [goToProducts, setGoToProducts] = useState(false)
     const [images, setImages] = useState(existingImages || [])
     const [uploading, setUploading] = useState(false)
     const router = useRouter()
+
+    // console.log("=>>")
+    // console.log(title)
 
     const [pageHeader, setPageHeader] = useState('')
     const [pageBtn, setPageBtn] = useState('')
