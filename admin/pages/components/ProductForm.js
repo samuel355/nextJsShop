@@ -6,17 +6,24 @@ import { ReactSortable } from "react-sortablejs";
 
 export default function ProductForm({productInfo}){
 
-    const {
-        title:existingTitle, 
-        description:existingDescription, 
-        price:existingPrice,
-        _id,
-        images:existingImages
-    } = productInfo;
+    // const {
+    //     title:existingTitle, 
+    //     description:existingDescription, 
+    //     price:existingPrice,
+    //     _id,
+    //     images:existingImages
+    // } = productInfo;
 
-    const [title, setTitle] = useState(existingTitle || '')
-    const [description, setDescription] = useState( existingDescription || '')
-    const [price, setPrice] = useState( existingPrice ||  '')
+    const existingTitle = productInfo?.title
+    const existingDescription = productInfo?.description
+    const _id = productInfo?.id
+    const existingPrice = productInfo?.price
+    const existingImages = productInfo?.images
+
+
+    const [title, setTitle] = useState(existingTitle)
+    const [description, setDescription] = useState(existingDescription)
+    const [price, setPrice] = useState(existingPrice)
     const [goToProducts, setGoToProducts] = useState(false)
     const [images, setImages] = useState(existingImages || [])
     const [uploading, setUploading] = useState(false)
@@ -47,7 +54,6 @@ export default function ProductForm({productInfo}){
             await axios.post('/api/products', data)
             setGoToProducts(true)
         }
-        
     }
 
     if(goToProducts){
@@ -75,7 +81,6 @@ export default function ProductForm({productInfo}){
     //Dragging images
     function updateImagesOrder(images){
         setImages(images)
-        
     }
 
     return(
