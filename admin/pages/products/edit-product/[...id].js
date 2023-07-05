@@ -20,7 +20,6 @@ export default function EditProduct(){
         })
     }, [id, productInfo]);
 
-
     return(
         <Layout>
             {

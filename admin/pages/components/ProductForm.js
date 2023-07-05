@@ -20,7 +20,6 @@ export default function ProductForm({productInfo}){
     const existingPrice = productInfo?.price
     const existingImages = productInfo?.images
 
-
     const [title, setTitle] = useState(existingTitle)
     const [description, setDescription] = useState(existingDescription)
     const [price, setPrice] = useState(existingPrice)
